@@ -535,3 +535,21 @@ copy  :: a -> (a, a)
 apply :: (a -> b) -> a -> b
 swap  :: (a,b) -> (b,a)
 ```
+
+> bools :: [Bool]
+> bools = [] 
+
+> nums :: [[Int]]
+> nums = [[], [1, 2, 3], [0], [989, 13, 2556]]
+
+> add :: Int -> Int -> Int -> Int
+> add alpha beta gama = 0
+
+> copy :: a -> (a, a)
+> copy original = (original, original)
+
+> apply :: (a -> b) -> a -> b
+> apply f x = f x
+
+> swap :: (a, b) -> (b, a)
+> swap (a, b) = (b, a)
