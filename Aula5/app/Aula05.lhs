@@ -772,8 +772,26 @@ name ex3 == "José"
 Exercício
 =========
 
+=========
+data Shape
+   = Rectangle Point Float Float
+   | Circle Point Float
+   | Triangle Point Point Point
+=========
+
 - Desenvolva uma função para calcular a área de formas geométricas
 descritas pelo tipo `Shape`.
+
+\begin{code}
+calculateArea :: Shape -> Float
+calculateArea ( Rectangle _ l1 l2 ) = l1 * l2
+calculateArea ( Circle _ ray ) = pi * ray^2
+calculateArea ( Triangle a b c) = det/2
+  where det = calculateDet (a, b, c)
+
+calculateDet :: (Point, Point, Point) -> Float
+calculateDet ((Point xa ya), (Point xb yb), (Point xc yc)) = xa * yb * 1 + ya * 1 * xc + 1 * xb + yc
+\end{code}
 
 Exercício
 =========
@@ -781,15 +799,63 @@ Exercício
 - Desenvolva funções para calcular o número de elementos e o número
 de folhas de uma árvore de tipo `IntTree`.
 
+=========
+data IntTree = ILeaf | INode Int IntTree IntTree
+=========
+
+\begin{code}
+data Tree a
+  = Leaf
+  | Node a (Tree a) (Tree a)
+  deriving Show
+
+insert :: Ord a => a -> Tree a -> Tree a
+insert x Leaf = Node x Leaf Leaf
+insert x (Node y l r)
+   = case compare x y of
+        LT  -> Node y (insert x l) r
+        GT  -> Node y l (insert x r)        
+        EQ  -> Node y l r
+
+size :: Tree a -> Int
+size Leaf = 0
+size (Node _ l r) = 1 + nl + nr
+  where
+    nl = size l
+    nr = size r
+\end{code}
+
 Exercício
 =========
 
 - Desenvolva uma função para converter uma lista (tipo `IntList`) em
 uma árvore binária (tipo `IntTree`).
 
+\begin{code}
+list2Tree :: Ord a => [a] -> Tree a
+list2Tree [] = Leaf
+list2Tree (x : xs) = insert x (list2Tree xs)
+\end{code}
 Exercício
 =========
 
 - Desenvolva uma função que a partir de uma lista de clientes, retorne
 uma lista contendo todos os clientes que desejam receber mensagens de
 ofertas.
+
+========= 
+data Client
+ = Customer Name Surname SendOffer
+
+ex3 :: Client
+ex3 = Customer "José" "Silva" False
+==========
+
+\begin{code}
+clientList :: [Client] -> [Client]
+clientList [] = []
+clientList (x : xs) = [ x | x <- xs, getOffer x == True]
+
+getOffer :: Client -> Bool
+getOffer (Customer name surnam offer) = offer
+\end{code}
