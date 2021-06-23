@@ -262,6 +262,24 @@ um inteiro é ou não par. Usando-a defina a função
 evenList [1, 2, 3] == [False, True, False]
 ~~~~~~
 
+\begin{code}
+map :: (a -> b) -> [a] -> [b]
+map _ [] = []
+map f list = [ f x | x <- list]
+\end{code}
+
+\begin{code}
+isEven :: Int -> Bool
+isEven n
+  | n `mod`2 == 0 = True
+  | otherwise = False
+
+evenList :: [Int] -> [Bool]
+evenList [] = [] 
+evenList list = Prelude.map isEven list
+
+\end{code}
+
 Função `filter`
 ===============
 
@@ -527,6 +545,17 @@ como parâmetro.
      - Apresente uma implementação usando filter.
      - Apresente uma implementação usando recursão.
 
+\begin{code}
+filter :: (a -> Bool) -> [a] -> [a]
+filter f list = [x | x <- list, f x]
+
+isInInterval :: Int -> Int -> Int -> Bool
+isInInterval x y n = x <= n && y >= n
+
+isInIntervalList :: Int -> Int -> [Int]
+isInIntervalList x y = Prelude.filter (> x) : Prelude.filter (< y)
+\end{code}
+
 Funções `foldr` e `foldl`
 ========================
 
@@ -700,12 +729,12 @@ Exemplos
 
 - Função `maxAverage`: escrita em _point-free_ style.
 
-\begin{code}
+ -- \begin{code}
 maxAverage :: [[Float]] -> Float
 maxAverage = maximum . map average . filter (not . null)
   where
     average xs = sum xs / fromIntegral (length xs)
-\end{code}
+ -- \end{code}
 
 Tarefa
 ======
