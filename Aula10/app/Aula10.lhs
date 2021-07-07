@@ -507,6 +507,14 @@ data Person
     }
 \end{code}
 
+\begin{code}
+
+instance Eq Person where
+   Person name1 age1 == Person name2 age2 = name1 == name2
+   Person name1 age1 /= Person name2 age2 = not (name1 == name2)
+
+\end{code}
+
 Exercícios
 ==========
 
@@ -515,3 +523,8 @@ Exercícios
 da conversão para string de um valor
 de tipo `Person` exiba apenas o
 campo name deste registro.
+
+\begin{code}
+instance Show Person where
+   show (Person name age) = show name
+\end{code}
