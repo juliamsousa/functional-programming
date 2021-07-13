@@ -669,7 +669,7 @@ Exercícios
 - Desenvolva a função
 
 > inRange :: Int -> Int -> [Int] -> [Int]
-> inRange = undefined
+> inRange s f list = [x | x <- list, x >= s && x <= 5]
 
 que retorna os elementos de uma lista pertencentes
 ao intervalo especificado pelos dois primeiros parâmetros
@@ -696,7 +696,9 @@ Exercícios
 esperado por sua implementação de `inRange`.
 
 > inRangeProperty :: Int -> Int -> [Int] -> Bool
-> inRangeProperty _ _ _ = True
+> inRangeProperty s f [] = True
+> inRangeProperty s f [x] = x >= s && x <= f
+> inRangeProperty s f (x : y : xs) = x <= y && inRangeProperty s f (y : xs)
 
 Agrupando testes
 ================
